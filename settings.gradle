@@ -1,0 +1,2 @@
+rootProject.name = "VideoRanker"
+include ':app'

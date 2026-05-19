@@ -1,0 +1,225 @@
+?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_dark">
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:gravity="center_vertical"
+        android:background="@color/bg_card">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="ðŸŽ¬ VIDEO RANKER"
+            android:textColor="@color/text_primary"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.1"/>
+
+        <TextView
+            android:id="@+id/clipCountBadge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0 CLIPS"
+            android:textColor="@color/accent_red"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:background="@drawable/badge_bg"
+            android:visibility="gone"/>
+    </LinearLayout>
+
+    <!-- Tab Layout -->
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_card"
+        app:tabGravity="fill"
+        app:tabMode="fixed"
+        app:tabIndicatorColor="@color/accent_red"
+        app:tabSelectedTextColor="@color/text_primary"
+        app:tabTextColor="@color/text_dim"
+        app:tabTextAppearance="@android:style/TextAppearance.Small"/>
+
+    <!-- Content below tabs -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <!-- CLIPS panel -->
+        <LinearLayout
+            android:id="@+id/panelClips"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <Button
+                android:id="@+id/addVideoBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="14dp"
+                android:text="@string/add_clips"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:letterSpacing="0.05"
+                android:backgroundTint="@color/accent_red"
+                android:padding="14dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/clipsRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:clipToPadding="false"/>
+        </LinearLayout>
+
+        <!-- STYLE panel -->
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/panelStyle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="12dp"
+                android:id="@+id/fontListContainer"/>
+        </androidx.core.widget.NestedScrollView>
+
+        <!-- AUDIO panel -->
+        <LinearLayout
+            android:id="@+id/panelAudio"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BACKGROUND MUSIC"
+                android:textColor="@color/text_dim"
+                android:textSize="10sp"
+                android:letterSpacing="0.15"
+                android:layout_marginBottom="10dp"/>
+
+            <LinearLayout
+                android:id="@+id/musicPickArea"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="24dp"
+                android:background="@drawable/dashed_border"
+                android:clickable="true"
+                android:focusable="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ðŸŽµ"
+                    android:textSize="32sp"/>
+
+                <TextView
+                    android:id="@+id/musicLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/music_hint"
+                    android:textColor="@color/text_dim"
+                    android:textSize="12sp"
+                    android:layout_marginTop="8dp"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/removeMusicBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Remove Music"
+                android:textColor="@color/text_secondary"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="@color/bg_item"
+                android:visibility="gone"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Caption position hint -->
+    <TextView
+        android:id="@+id/captionHint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="âœ¥ Touch &amp; drag on preview to set caption position"
+        android:textColor="@color/text_dim"
+        android:textSize="10sp"
+        android:gravity="center"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp"
+        android:background="@color/bg_card"
+        android:visibility="gone"/>
+
+    <!-- Progress Bar -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="6dp"
+        android:progressTint="@color/accent_red"
+        android:progressBackgroundTint="@color/border"
+        android:max="100"
+        android:progress="0"
+        android:visibility="gone"/>
+
+    <!-- Status + Merge -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="14dp"
+        android:background="@color/bg_card">
+
+        <TextView
+            android:id="@+id/statusText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/status_ready"
+            android:textColor="@color/text_secondary"
+            android:textSize="11sp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/mergeBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/merge_export"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:letterSpacing="0.05"
+            android:backgroundTint="@color/accent_red"
+            android:padding="14dp"/>
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Video Ranker</string>
+    <string name="add_clips">+ Add Video Clips</string>
+    <string name="merge_export">⚡ Merge &amp; Export</string>
+    <string name="status_ready">Ready</string>
+    <string name="status_processing">Processing…</string>
+    <string name="status_done">✓ Export complete!</string>
+    <string name="tab_clips">Clips</string>
+    <string name="tab_style">Style</string>
+    <string name="tab_audio">Audio</string>
+    <string name="caption_hint">Caption for this clip…</string>
+    <string name="music_hint">Tap to select background music</string>
+    <string name="need_two_clips">Add at least 2 video clips</string>
+    <string name="permission_required">Storage permission required</string>
+    <string name="video_saved">Video saved to Movies folder!</string>
+</resources>

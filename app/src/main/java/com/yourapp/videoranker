@@ -1,0 +1,65 @@
+package com.yourapp.videoranker
+
+import android.content.Context
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.util.AttributeSet
+import android.view.MotionEvent
+import android.view.View
+
+class CaptionOverlayView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null
+) : View(context, attrs) {
+
+    var captionText: String = "Your caption"
+    var xFraction: Float = 0.5f
+    var yFraction: Float = 0.82f
+    var onPositionChanged: ((Float, Float) -> Unit)? = null
+
+    private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        color = Color.WHITE
+        textSize = 42f
+        textAlign = Paint.Align.CENTER
+        setShadowLayer(8f, 3f, 3f, Color.BLACK)
+    }
+
+    private val bgPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        color = Color.parseColor("#66000000")
+    }
+
+    override fun onDraw(canvas: Canvas) {
+        super.onDraw(canvas)
+        if (captionText.isBlank()) return
+
+        val x = width * xFraction
+        val y = height * yFraction
+
+        val textWidth = paint.measureText(captionText)
+        val textHeight = paint.textSize
+        val pad = 12f
+
+        canvas.drawRoundRect(
+            x - textWidth / 2 - pad,
+            y - textHeight - pad / 2,
+            x + textWidth / 2 + pad,
+            y + pad / 2,
+            8f, 8f, bgPaint
+        )
+        canvas.drawText(captionText, x, y, paint)
+    }
+
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        when (event.action) {
+            MotionEvent.ACTION_DOWN, MotionEvent.ACTION_MOVE -> {
+                xFraction = (event.x / width).coerceIn(0.05f, 0.95f)
+                yFraction = (event.y / height).coerceIn(0.05f, 0.95f)
+                onPositionChanged?.invoke(xFraction, yFraction)
+                invalidate()
+                return true
+            }
+        }
+        return super.onTouchEvent(event)
+    }
+    }

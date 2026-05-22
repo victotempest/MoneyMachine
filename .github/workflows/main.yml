@@ -8,8 +8,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     steps:
       - name: Checkout code
@@ -24,31 +22,6 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Accept Android SDK licenses
-        run: yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
-
-      - name: Install required SDK components
-        run: |
-          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platforms;android-34" "build-tools;34.0.0"
-
-      - name: Create local.properties
-        run: echo "sdk.dir=$ANDROID_HOME" > local.properties
-
-      # ---------- FIX: Install Gradle and regenerate wrapper ----------
-      - name: Install Gradle
-        run: |
-          wget https://services.gradle.org/distributions/gradle-8.0-bin.zip
-          unzip -q gradle-8.0-bin.zip
-          echo "$PWD/gradle-8.0/bin" >> $GITHUB_PATH
-
-      - name: Regenerate Gradle wrapper
-        run: |
-          # Remove the old (corrupted) wrapper JAR
-          rm -f gradle/wrapper/gradle-wrapper.jar
-          # Generate a fresh wrapper using the installed Gradle
-          gradle wrapper --gradle-version 8.0
-      # ----------------------------------------------------------------
-
       - name: Make gradlew executable
         run: chmod +x ./gradlew
 
@@ -59,4 +32,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: VideoRanker-debug
-          path: app/build/outputs/apk/debug/*.apk
+          path: app/build/outputs/apk/debug/app-debug.apk
